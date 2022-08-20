@@ -1,0 +1,43 @@
+{
+    "name": "blahtesoftware/bspaypal",
+    "description": "This library provides a fluent, simple and intuitive PHP integration for Paypal.",
+    "keywords": ["laravel","bspaypal", "paypal", "php"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Blahte Software",
+            "email": "hello@blahte.software"
+        }
+    ],
+    "require": {
+        "php": ">=8.0",
+        "symfony/process": "^6.0",
+        "psr/log": "^2.0||^3.0",
+        "illuminate/support": "~8.17||^9",
+        "illuminate/filesystem": "~8.17|^9"
+    },
+    "autoload": {
+        "psr-4": {
+            "BlahteSoftware\\BsPdf\\": "src/"
+        },
+        "files": [
+            "src/Utils/constants.php",
+            "src/Utils/functions.php"
+        ]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "1.0-dev"
+        },
+        "laravel": {
+            "providers": [
+                "BlahteSoftware\\BsPaypal\\ServiceProviders\\BsPaypalServiceProvider"
+            ],
+            "aliases": {
+                "BSPDF": "BlahteSoftware\\BsPaypal\\Facades\\BsPaypal"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
