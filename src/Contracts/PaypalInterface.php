@@ -2,7 +2,9 @@
 
 namespace BlahteSoftware\BsPaypal\Contracts;
 
-interface PaypalInterface {
+use PaypalAuthenticationInterface;
+
+interface PaypalInterface extends PaypalAuthenticationInterface {
     /**
      * Get the Paypal instance.
      * 
