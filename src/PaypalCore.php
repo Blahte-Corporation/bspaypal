@@ -35,7 +35,9 @@ class PaypalCore implements PaypalCoreInterface {
             'error' => null,
             'code' => null
         ];
-        $request_data = [];
+        $request_data = [
+            'grant_type' => 'client_credentials'
+        ];
         $c = curl_init();
         curl_setopt($c, CURLOPT_POST, true);
         curl_setopt($c, CURLOPT_URL, $url);

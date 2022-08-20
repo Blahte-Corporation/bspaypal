@@ -27,6 +27,14 @@ interface PaypalAuthenticationInterface {
             "nonce": "2020-04-03T15:35:36ZaYZlGvEkV4yVSz8g6bAKFoGSEzuy3CQcz3ljhibkOHg"
         }
      /
+        { 
+            "success" => {
+                "error":"unsupported_grant_type",
+                "error_description":"Grant Type is NULL"
+            },
+            "error" => NULL,
+            "code" => int(0) 
+        } 
      * 
      */
     public function generateAccessToken() : array;
