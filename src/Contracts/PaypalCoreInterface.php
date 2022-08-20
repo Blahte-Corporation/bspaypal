@@ -2,4 +2,6 @@
 
 namespace BlahteSoftware\BsPaypal\Contracts;
 
-interface PaypalCoreInterface {}
+use PaypalAuthenticationInterface;
+
+interface PaypalCoreInterface extends PaypalAuthenticationInterface {}
