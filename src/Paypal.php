@@ -7,8 +7,15 @@ use BlahteSoftware\BsPaypal\Contracts\PaypalInterface;
 use Exception;
 
 class Paypal implements PaypalInterface {
-    protected PaypalCoreInterface $core;
-    protected static PaypalInterface $instance;
+    /**
+     * @var \BlahteSoftware\BsPaypal\Contracts\PaypalCoreInterface
+     */
+    protected $core;
+
+    /**
+     * @var \BlahteSoftware\BsPaypal\Contracts\PaypalInterface
+     */
+    protected static $instance;
 
     private function __construct(PaypalCoreInterface $paypalCore)
     {
