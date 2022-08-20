@@ -27,7 +27,7 @@ class PaypalCore implements PaypalCoreInterface {
     /**
      * @inheritdoc
      */
-    public function generateAccessToken(string $clientId, string $secret): array
+    public function generateAccessToken(): array
     {
         $url = "https://api-m.sandbox.paypal.com/v1/oauth2/token";
         $response = [

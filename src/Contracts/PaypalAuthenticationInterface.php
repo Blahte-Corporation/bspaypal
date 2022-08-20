@@ -4,7 +4,6 @@ interface PaypalAuthenticationInterface {
     /**
      * generateAccessToken
      *      exchange your client ID and secret for an access token
-     * @param string $clientId
      * 
      * 
      * Example Request
@@ -28,6 +27,6 @@ interface PaypalAuthenticationInterface {
      /
      * 
      */
-    public function generateAccessToken(string $clientId, string $secret) : array;
+    public function generateAccessToken() : array;
 
 }

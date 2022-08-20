@@ -36,4 +36,8 @@ class Paypal implements PaypalInterface {
         }
         return static::$instance;
     }
+
+    public function generateAccessToken() : array {
+        return $this->core->generateAccessToken();
+    }
 }
