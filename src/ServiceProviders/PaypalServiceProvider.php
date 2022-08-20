@@ -8,7 +8,7 @@ use BlahteSoftware\BsPaypal\Paypal;
 use BlahteSoftware\BsPaypal\PaypalCore;
 use Illuminate\Support\ServiceProvider;
 
-class BsPaypalServiceProvider extends ServiceProvider
+class PaypalServiceProvider extends ServiceProvider
 {
     /**
      * Register services.

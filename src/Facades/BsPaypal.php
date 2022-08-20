@@ -1,6 +1,6 @@
 <?php
 
-namespace BlahteSoftware\BsPdf\Facades;
+namespace BlahteSoftware\BsPaypal\Facades;
 
 use BlahteSoftware\BsPaypal\Contracts\PaypalInterface;
 use Illuminate\Support\Facades\Facade;
