@@ -1,5 +1,7 @@
 <?php 
 
+namespace BlahteSoftware\BsPaypal\Contracts;
+
 interface PaypalAuthenticationInterface {
     /**
      * generateAccessToken
