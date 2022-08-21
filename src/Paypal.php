@@ -44,7 +44,58 @@ class Paypal implements PaypalInterface {
         return static::$instance;
     }
 
-    public function generateAccessToken() : array {
-        return $this->core->generateAccessToken();
+    public function getAccessToken() : string {
+        $response = $this->core->generateAccessToken();
+        if(! property_exists($response['success'], 'access_token') ) {
+            throw new Exception("Failed to fetch access token.");
+        }
+        return $response['success']->access_token;
+    }
+
+    /**
+     * @see https://developer.paypal.com/docs/api/orders/v2/
+     */
+    public function createOrder(
+        string $requestId,
+        string $referenceId,
+        string $amount,
+        string $currencyCode = "USD",
+        bool $preferCompleteRepresentation = false
+    ) {
+        $url = $this->core->url("/v2/checkout/orders");
+        $response = [
+            'success' => null,
+            'error' => null,
+            'code' => null
+        ];
+        $headers = [
+            "Accept: application/json",
+            "Content-Type: application/json",
+            "Authorization: Bearer {$this->getAccessToken()}",
+            "Paypal-Request-Id: {$requestId}"
+        ];
+        if($preferCompleteRepresentation == true) $headers[] = "Prefer: return=representation"; 
+        $body = [
+            'intent' => 'AUTHORIZE',
+            "purchase_units" => [
+                "reference_id" => $referenceId,
+                "amount" => [
+                    "currency_code" => $currencyCode,
+                    "value" => $amount
+                ]
+            ]
+        ];
+        $c = curl_init();
+        curl_setopt($c, CURLOPT_POST, true);
+        curl_setopt($c, CURLOPT_URL, $url);
+        curl_setopt($c, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($c, CURLOPT_HEADER, false);
+        curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($c, CURLOPT_POSTFIELDS, json_encode($body));
+        $response['code'] = curl_getinfo($c, CURLINFO_HTTP_CODE);
+        $response['success'] = json_decode(curl_exec($c));
+        if(curl_errno($c)) $response['error'] = curl_error($c);
+        curl_close($c);
+        return $response;
     }
 }

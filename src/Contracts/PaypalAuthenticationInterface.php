@@ -39,4 +39,9 @@ interface PaypalAuthenticationInterface {
      */
     public function generateAccessToken() : array;
 
+    public function generateAuthAssertionHeader(
+        string $client_id,
+        string $payer_id
+    ) : string;
+
 }
