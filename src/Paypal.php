@@ -61,7 +61,7 @@ class Paypal implements PaypalInterface {
         string $amount,
         string $currencyCode = "USD",
         bool $preferCompleteRepresentation = false
-    ) {
+    ) : array {
         $url = $this->core->url("/v2/checkout/orders");
         $response = [
             'success' => null,
