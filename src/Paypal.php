@@ -97,6 +97,7 @@ class Paypal implements PaypalInterface {
                 "cancel_url" => $cancelUrl
             ]
         ];
+        return json_decode(json_encode($body), true);
         $c = curl_init();
         curl_setopt($c, CURLOPT_POST, true);
         curl_setopt($c, CURLOPT_URL, $url);
