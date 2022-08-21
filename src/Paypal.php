@@ -53,15 +53,66 @@ class Paypal implements PaypalInterface {
     }
 
     /**
-     * @see https://developer.paypal.com/docs/api/orders/v2/
+     * @inheritdoc
      */
     public function createOrder(
         string $requestId,
-        string $referenceId,
+        array $items,
         string $amount,
         string $currencyCode = "USD",
-        bool $preferCompleteRepresentation = false
+        bool $preferCompleteRepresentation = true,
+        string $returnUrl,
+        string $cancelUrl
     ) : array {
+        $url = $this->core->url("/v2/checkout/orders");
+        $response = [
+            'success' => null,
+            'error' => null,
+            'code' => null
+        ];
+        $headers = [
+            "Accept: application/json",
+            "Content-Type: application/json",
+            "Authorization: Bearer {$this->getAccessToken()}",
+            "Paypal-Request-Id: {$requestId}"
+        ];
+        if($preferCompleteRepresentation == true) $headers[] = "Prefer: return=representation"; 
+        $body = [
+            'intent' => 'CAPTURE',
+            "purchase_units" => [
+                "items" => $items,
+                "amount" => [
+                    "currency_code" => $currencyCode,
+                    "value" => $amount,
+                    "breakdown" => [
+                        "item_total" => [
+                            "currency_code" => $currencyCode,
+                            "value" => $amount
+                        ]
+                    ]
+                ]
+            ],
+            "application_context" => [
+                "return_url" => $returnUrl,
+                "cancel_url" => $cancelUrl
+            ]
+        ];
+        $c = curl_init();
+        curl_setopt($c, CURLOPT_POST, true);
+        curl_setopt($c, CURLOPT_URL, $url);
+        curl_setopt($c, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($c, CURLOPT_HEADER, false);
+        curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($c, CURLOPT_POSTFIELDS, json_encode($body));
+        $response['code'] = curl_getinfo($c, CURLINFO_HTTP_CODE);
+        $response['success'] = json_decode(curl_exec($c));
+        if(curl_errno($c)) $response['error'] = curl_error($c);
+        curl_close($c);
+        return $response;
+    }
+
+    /*/
+    public function makePayment() : array {
         $url = $this->core->url("/v2/checkout/orders");
         $response = [
             'success' => null,
@@ -98,4 +149,5 @@ class Paypal implements PaypalInterface {
         curl_close($c);
         return $response;
     }
+    /*/
 }

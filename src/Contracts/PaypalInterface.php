@@ -12,18 +12,24 @@ interface PaypalInterface {
     public static function getInstance(PaypalCoreInterface $paypalCore = null) : PaypalInterface;
 
     /**
+     * @see https://developer.paypal.com/docs/api/orders/v2/
+     * 
      * @param string $requestId
-     * @param string $referenceId
+     * @param array $items
      * @param string $amount
      * @param string $currencyCode
      * @param bool $preferCompleteRepresentation
+     * @param string $returnUrl
+     * @param string $cancelUrl
      * @return array
      */
     public function createOrder(
         string $requestId,
-        string $referenceId,
+        array $items,
         string $amount,
         string $currencyCode = "USD",
-        bool $preferCompleteRepresentation = false
-    ) : array;
+        bool $preferCompleteRepresentation = true,
+        string $returnUrl,
+        string $cancelUrl
+    ) : array
 }
