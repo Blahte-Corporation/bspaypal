@@ -15,21 +15,13 @@ interface PaypalInterface {
      * @see https://developer.paypal.com/docs/api/orders/v2/
      * 
      * @param string $requestId
-     * @param array $items
-     * @param string $amount
-     * @param string $currencyCode
+     * @param string $body
      * @param bool $preferCompleteRepresentation
-     * @param string $returnUrl
-     * @param string $cancelUrl
      * @return array
      */
     public function createOrder(
         string $requestId,
-        array $items,
-        string $amount,
-        string $currencyCode = "USD",
-        bool $preferCompleteRepresentation = true,
-        string $returnUrl,
-        string $cancelUrl
+        string $body,
+        bool $preferCompleteRepresentation = true
     ) : array;
 }

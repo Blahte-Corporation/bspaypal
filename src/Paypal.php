@@ -57,12 +57,8 @@ class Paypal implements PaypalInterface {
      */
     public function createOrder(
         string $requestId,
-        array $items,
-        string $amount,
-        string $currencyCode = "USD",
-        bool $preferCompleteRepresentation = true,
-        string $returnUrl,
-        string $cancelUrl
+        string $body,
+        bool $preferCompleteRepresentation = true
     ) : array {
         $url = $this->core->url("/v2/checkout/orders");
         $response = [
@@ -77,34 +73,13 @@ class Paypal implements PaypalInterface {
             "Paypal-Request-Id: {$requestId}"
         ];
         if($preferCompleteRepresentation == true) $headers[] = "Prefer: return=representation"; 
-        $body = [
-            'intent' => 'CAPTURE',
-            "purchase_units" => [
-                "items" => $items,
-                "amount" => [
-                    "currency_code" => $currencyCode,
-                    "value" => $amount,
-                    "breakdown" => [
-                        "item_total" => [
-                            "currency_code" => $currencyCode,
-                            "value" => $amount
-                        ]
-                    ]
-                ]
-            ],
-            "application_context" => [
-                "return_url" => $returnUrl,
-                "cancel_url" => $cancelUrl
-            ]
-        ];
-        return json_decode(json_encode($body), true);
         $c = curl_init();
         curl_setopt($c, CURLOPT_POST, true);
         curl_setopt($c, CURLOPT_URL, $url);
         curl_setopt($c, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($c, CURLOPT_HEADER, false);
         curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($c, CURLOPT_POSTFIELDS, json_encode($body));
+        curl_setopt($c, CURLOPT_POSTFIELDS, $body);
         $response['code'] = curl_getinfo($c, CURLINFO_HTTP_CODE);
         $response['success'] = json_decode(curl_exec($c));
         if(curl_errno($c)) $response['error'] = curl_error($c);
