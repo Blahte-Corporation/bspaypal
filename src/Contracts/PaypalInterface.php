@@ -31,5 +31,5 @@ interface PaypalInterface {
         bool $preferCompleteRepresentation = true,
         string $returnUrl,
         string $cancelUrl
-    ) : array
+    ) : array;
 }
