@@ -97,7 +97,7 @@ SQL;
         $stmt = $this->db::run($sql, [
             'expiryDate' => $now->format(DATE_W3C)
         ]);
-        if($stmt->errorCode() === BSPAYPAL_PDOSTATEMENT_ERROR) {
+        if($stmt->errorCode() !== BSPAYPAL_PDO_QUERY_OK) {
             throw new PDOException("SQLSTATE {$stmt->errorCode} {$stmt->errorInfo[2]}");
         }
         $n = $stmt->fetch(PDO::FETCH_OBJ);
@@ -132,7 +132,7 @@ ORDER BY id DESC
 LIMIT 1
 SQL;
         $stmt = $this->db::run($sql);
-        if($stmt->errorCode() === BSPAYPAL_PDOSTATEMENT_ERROR) {
+        if($stmt->errorCode() !== BSPAYPAL_PDO_QUERY_OK) {
             throw new PDOException("SQLSTATE {$stmt->errorCode} {$stmt->errorInfo[2]}");
         }
         $n = $stmt->fetch(PDO::FETCH_OBJ);
@@ -268,7 +268,7 @@ SQL;
         $stmt = $this->db::run($sql, [
             'request_id' => $requestId
         ]);
-        if($stmt->errorCode() === BSPAYPAL_PDOSTATEMENT_ERROR) {
+        if($stmt->errorCode() !== BSPAYPAL_PDO_QUERY_OK) {
             throw new PDOException("SQLSTATE {$stmt->errorCode} {$stmt->errorInfo[2]}");
         }
         $n = $stmt->fetch(PDO::FETCH_OBJ);
