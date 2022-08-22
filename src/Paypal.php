@@ -147,7 +147,7 @@ SQL;
         string $requestId,
         string $body,
         bool $preferCompleteRepresentation = true
-    ) : array {
+    ) : CreateOrderResponse {
         JsonValidator::validate($body);
         $obj = json_decode($body, false);
         table_insert($this->db->getPdo(), BSPAYPAL_TABLE_ORDERS, [
@@ -231,9 +231,9 @@ SQL;
                 'updated_at' => (new DateTime())->format(DATE_W3C),
                 'request_id' => $requestId
             ]);
-            return new CreateOrderResponse($this->response['success']);
+            // return new CreateOrderResponse($this->response['success']);
         }
-        return $response;
+        return new CreateOrderResponse($this->response['success']);
     }
 
     public function requestForApproval(string $requestId) : PaypalInterface {

@@ -2,6 +2,8 @@
 
 namespace BlahteSoftware\BsPaypal\Contracts;
 
+use BlahteSoftware\BsPaypal\CreateOrderResponse;
+
 interface PaypalInterface {
     /**
      * Get the Paypal instance.
@@ -120,13 +122,13 @@ interface PaypalInterface {
      * @param string $requestId
      * @param string $body
      * @param bool $preferCompleteRepresentation
-     * @return array
+     * @return \BlahteSoftware\BsPaypal\CreateOrderResponse
      */
     public function createOrder(
         string $requestId,
         string $body,
         bool $preferCompleteRepresentation = true
-    ) : array;
+    ) : CreateOrderResponse;
 
     public function requestForApproval(string $requestId) : PaypalInterface;
 
