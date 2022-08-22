@@ -109,7 +109,7 @@ SQL;
             throw new Exception("Failed to fetch access token.");
         }
         $expiry = new DateTime();
-        $expiry->add(new DateInterval('P'. $response['success']->expires_in .'S'));
+        $expiry->add(new DateInterval('PT'. $response['success']->expires_in .'S'));
         table_insert($this->db->pdo, $tableName, [
             'expiry_date' => $expiry->format(DATE_YMDHIS),
             'scope' => $response['success']->scope,
