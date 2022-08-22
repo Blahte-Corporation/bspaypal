@@ -95,7 +95,7 @@ SQL;
         $now = new DateTime();
         $now->sub(new DateInterval('P60S'));
         $stmt = $this->db::run($sql, [
-            'expiryDate' => $now->format(DATE_W3C)
+            'expiryDate' => $now->format(DATE_YMDHIS)
         ]);
         if($stmt->errorCode() !== BSPAYPAL_PDO_QUERY_OK) {
             throw new PDOException("SQLSTATE {$stmt->errorCode} {$stmt->errorInfo[2]}");
@@ -111,14 +111,14 @@ SQL;
         $expiry = new DateTime();
         $expiry->add(new DateInterval('P'. $response['success']->expires_in .'S'));
         table_insert($this->db->pdo, $tableName, [
-            'expiry_date' => $expiry->format(DATE_W3C),
+            'expiry_date' => $expiry->format(DATE_YMDHIS),
             'scope' => $response['success']->scope,
             'access_token' => $response['success']->access_token,
             'token_type' => $response['success']->token_type,
             'app_id' => $response['success']->app_id,
             'expires_in' => $response['success']->expires_in,
             'nonce' => $response['success']->nonce,
-            'created_at' => (new DateTime())->format(DATE_W3C)
+            'created_at' => (new DateTime())->format(DATE_YMDHIS)
         ]);
         return $response['success']->access_token;
     }
@@ -140,7 +140,7 @@ SQL;
         $requestId = (new class { use RequestIdTrait; })->getRequestNumber($lastId);
         table_insert($this->db->getPdo(), BSPAYPAL_TABLE_REQUEST_IDS, [
             'name' => $requestId,
-            'created_at' => (new DateTime())->format(DATE_W3C)
+            'created_at' => (new DateTime())->format(DATE_YMDHIS)
         ]);
         return $requestId;
     }
@@ -163,7 +163,7 @@ SQL;
             'return_url' => $obj->application_context->return_url,
             'cancel_url' => $obj->application_context->cancel_url,
             'request_body' => $body,
-            'created_at' => (new DateTime())->format(DATE_W3C)
+            'created_at' => (new DateTime())->format(DATE_YMDHIS)
         ]);
         $url = $this->core->url("/v2/checkout/orders");
         $response = [
@@ -200,7 +200,7 @@ request_id=:request_id
 SQL;
         $this->db::run($sql, [
             'response_body' => json_encode($response['success']),
-            'updated_at' => (new DateTime())->format(DATE_W3C),
+            'updated_at' => (new DateTime())->format(DATE_YMDHIS),
             'request_id' => $requestId
         ]);
         if(property_exists($response['success'], 'id') &&
@@ -233,7 +233,7 @@ SQL;
                 'capture_url' => $captureLink->href,
                 'update_url' => $updateLink->href,
                 'info_url' => $infoLink->href,
-                'updated_at' => (new DateTime())->format(DATE_W3C),
+                'updated_at' => (new DateTime())->format(DATE_YMDHIS),
                 'request_id' => $requestId
             ]);
         }
@@ -252,7 +252,7 @@ request_id=:request_id
 SQL;
         $this->db::run($sql, [
             'status' => 'AWAITING APPROVAL',
-            'updated_at' => (new DateTime())->format(DATE_W3C),
+            'updated_at' => (new DateTime())->format(DATE_YMDHIS),
             'request_id' => $requestId
         ]);
         return $this;
@@ -310,7 +310,7 @@ request_id=:request_id
 SQL;
         $this->db::run($sql, [
             'status' => $response['success']->status,
-            'updated_at' => (new DateTime())->format(DATE_W3C),
+            'updated_at' => (new DateTime())->format(DATE_YMDHIS),
             'request_id' => $requestId
         ]);
         return $this;
@@ -328,7 +328,7 @@ request_id=:request_id
 SQL;
         $this->db::run($sql, [
             'payer_id' => $payerId,
-            'updated_at' => (new DateTime())->format(DATE_W3C),
+            'updated_at' => (new DateTime())->format(DATE_YMDHIS),
             'request_id' => $requestId
         ]);
         return $this;
@@ -346,7 +346,7 @@ request_id=:request_id
 SQL;
         $this->db::run($sql, [
             'status' => 'CANCELLED',
-            'updated_at' => (new DateTime())->format(DATE_W3C),
+            'updated_at' => (new DateTime())->format(DATE_YMDHIS),
             'request_id' => $requestId
         ]);
         return $this;

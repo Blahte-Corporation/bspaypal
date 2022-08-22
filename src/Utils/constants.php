@@ -12,4 +12,6 @@ if(! defined('BSPAYPAL_TABLE_ACCESS_TOKENS') ) {
     define('BSPAYPAL_DDL_TABLE_ACCESS_TOKENS', dirname(__FILE__, 2) . '/Sql/accessTokens.sql');
     define('BSPAYPAL_DDL_TABLE_REQUEST_IDS', dirname(__FILE__, 2) . '/Sql/requestIds.sql');
     define('BSPAYPAL_DDL_TABLE_ORDERS', dirname(__FILE__, 2) . '/Sql/orders.sql');
+
+    define('DATE_YMDHIS', 'Y-m-d H:i:s');
 }
