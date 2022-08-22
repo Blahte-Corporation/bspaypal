@@ -9,4 +9,7 @@ if(! defined('BSPAYPAL_TABLE_ACCESS_TOKENS') ) {
     define('BSPAYPAL_TABLE_ORDERS', 'bspaypal_orders');
 
     define('BSPAYPAL_PDOSTATEMENT_ERROR', '00000');
+    define('BSPAYPAL_DDL_TABLE_ACCESS_TOKENS', dirname(__FILE__, 2) . '/Sql/accessTokens.sql');
+    define('BSPAYPAL_DDL_TABLE_REQUEST_IDS', dirname(__FILE__, 2) . '/Sql/requestIds.sql');
+    define('BSPAYPAL_DDL_TABLE_ORDERS', dirname(__FILE__, 2) . '/Sql/orders.sql');
 }

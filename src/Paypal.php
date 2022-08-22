@@ -71,8 +71,13 @@ class Paypal implements PaypalInterface {
     public function ensureDatabaseTablesExist() {
         try {
             if(! table_exists($this->db->pdo, BSPAYPAL_TABLE_ACCESS_TOKENS) ) {
-                $sql = file_get_contents(dirname(__FILE__) . DIRECTORY_SEPARATOR . '.sql');
-                $this->db::run($sql);
+                foreach([
+                    BSPAYPAL_DDL_TABLE_ACCESS_TOKENS,
+                    BSPAYPAL_DDL_TABLE_REQUEST_IDS,
+                    BSPAYPAL_DDL_TABLE_ORDERS
+                ] as $file) {
+                    $this->db::run(file_get_contents($file));
+                }
             }
         } catch(Throwable $e) {
             throw $e;
@@ -231,7 +236,6 @@ SQL;
                 'updated_at' => (new DateTime())->format(DATE_W3C),
                 'request_id' => $requestId
             ]);
-            // return new CreateOrderResponse($this->response['success']);
         }
         return new CreateOrderResponse($this->response['success']);
     }
