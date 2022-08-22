@@ -8,9 +8,11 @@ use function BlahteSoftware\BsPaypal\Utils\findObjectByPropertyValue;
 
 class CreateOrderResponse {
     protected object $data;
+    protected string $request_id;
 
-    public function __construct(object $data) {
+    public function __construct(string $request_id, object $data) {
         $this->data = $data;
+        $this->request_id = $request_id;
     }
 
     public function getApprovalUrl() : string {
@@ -67,6 +69,10 @@ class CreateOrderResponse {
             throw new Exception("Link not found.");
         }
         return $link->href;
+    }
+
+    public function getRequestId() : string {
+        return $this->request_id;
     }
 
     public function getOrderId() : string {
