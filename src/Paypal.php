@@ -93,7 +93,7 @@ expiry_date<:expiryDate
 LIMIT 1
 SQL;
         $now = new DateTime();
-        $now->sub(new DateInterval('P60S'));
+        $now->sub(new DateInterval('PT60S'));
         $stmt = $this->db::run($sql, [
             'expiryDate' => $now->format(DATE_YMDHIS)
         ]);
@@ -136,7 +136,7 @@ SQL;
             throw new PDOException("SQLSTATE {$stmt->errorCode} {$stmt->errorInfo[2]}");
         }
         $n = $stmt->fetch(PDO::FETCH_OBJ);
-        $lastId = empty($n) ? 0 : $n->id;
+        $lastId = empty($n) ? 1 : $n->id + 1;
         $requestId = (new class { use RequestIdTrait; })->getRequestNumber($lastId);
         table_insert($this->db->getPdo(), BSPAYPAL_TABLE_REQUEST_IDS, [
             'name' => $requestId,
