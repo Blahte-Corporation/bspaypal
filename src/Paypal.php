@@ -237,7 +237,7 @@ SQL;
                 'request_id' => $requestId
             ]);
         }
-        return new CreateOrderResponse($this->response['success']);
+        return new CreateOrderResponse($response['success']);
     }
 
     public function requestForApproval(string $requestId) : PaypalInterface {
