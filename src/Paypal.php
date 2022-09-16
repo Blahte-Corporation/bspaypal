@@ -306,7 +306,7 @@ SQL;
         $response['success'] = json_decode(curl_exec($c));
         if(curl_errno($c)) $response['error'] = curl_error($c);
         curl_close($c);
-        if(! property_exists($response['success'], 'status')) {
+        if(! is_null($response['success']) || ! property_exists($response['success'], 'status')) {
             throw new Exception(json_encode($response));
         }
         $tableName = BSPAYPAL_TABLE_ORDERS;
