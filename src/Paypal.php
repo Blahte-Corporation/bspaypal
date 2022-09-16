@@ -291,7 +291,7 @@ SQL;
             "Authorization: Bearer {$this->getAccessToken()}",
             "Paypal-Request-Id: {$requestId}"
         ];
-        // $headers[] = "Prefer: return=representation"; 
+        $headers[] = "Prefer: return=representation"; 
         $body = json_encode([
             'PayerID' => $n->payer_id
         ]);
@@ -306,6 +306,9 @@ SQL;
         $response['success'] = json_decode(curl_exec($c));
         if(curl_errno($c)) $response['error'] = curl_error($c);
         curl_close($c);
+        if(! property_exists($response['success'], 'status')) {
+            throw new Exception(json_encode($response));
+        }
         $tableName = BSPAYPAL_TABLE_ORDERS;
         $sql = 
 <<<SQL
