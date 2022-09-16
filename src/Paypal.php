@@ -106,7 +106,8 @@ SQL;
         }
         $response = $this->core->generateAccessToken();
         if(! property_exists($response['success'], 'access_token') ) {
-            throw new Exception("Failed to fetch access token.");
+            // throw new Exception("Failed to fetch access token.");
+            throw new Exception(json_encode($response, JSON_PRETTY_PRINT));
         }
         $expiry = new DateTime();
         $expiry->add(new DateInterval('PT'. $response['success']->expires_in .'S'));
