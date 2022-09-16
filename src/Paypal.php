@@ -211,8 +211,9 @@ SQL;
             'request_id' => $requestId
         ]);
         if(property_exists($response['success'], 'id') &&
-            property_exists($response['success'], 'CAPTURE') &&
-            property_exists($response['success'], 'CREATED') &&
+            property_exists($response['success'], 'intent') &&
+            property_exists($response['success'], 'status') &&
+            property_exists($response['success'], 'links') &&
             $response['success']->intent == 'CAPTURE' &&
             $response['success']->status == 'CREATED'
         ) {
@@ -280,7 +281,6 @@ SQL;
         }
         $n = $stmt->fetch(PDO::FETCH_OBJ);
         $url = $n->capture_url;
-        throw new Exception($url);
         $response = [
             'success' => null,
             'error' => null,
