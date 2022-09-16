@@ -280,6 +280,7 @@ SQL;
         }
         $n = $stmt->fetch(PDO::FETCH_OBJ);
         $url = $n->capture_url;
+        throw new Exception($url);
         $response = [
             'success' => null,
             'error' => null,
