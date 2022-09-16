@@ -217,10 +217,10 @@ SQL;
             $response['success']->intent == 'CAPTURE' &&
             $response['success']->status == 'CREATED'
         ) {
-            $approvalLink = findObjectByPropertyValue($response['success']->links, 'ref', 'approve');
-            $captureLink = findObjectByPropertyValue($response['success']->links, 'ref', 'capture');
-            $updateLink = findObjectByPropertyValue($response['success']->links, 'ref', 'update');
-            $infoLink = findObjectByPropertyValue($response['success']->links, 'ref', 'self');
+            $approvalLink = findObjectByPropertyValue($response['success']->links, 'rel', 'approve');
+            $captureLink = findObjectByPropertyValue($response['success']->links, 'rel', 'capture');
+            $updateLink = findObjectByPropertyValue($response['success']->links, 'rel', 'update');
+            $infoLink = findObjectByPropertyValue($response['success']->links, 'rel', 'self');
             $sql = 
 <<<SQL
 UPDATE `{$tableName}` SET
