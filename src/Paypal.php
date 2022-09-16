@@ -89,7 +89,7 @@ class Paypal implements PaypalInterface {
         $sql = 
 <<<SQL
 SELECT * FROM `{$tableName}` WHERE
-expiry_date<:expiryDate
+expiry_date>:expiryDate
 LIMIT 1
 SQL;
         $now = new DateTime();

@@ -40,7 +40,6 @@ class PaypalCore implements PaypalCoreInterface {
     public function generateAccessToken(): array
     {
         $url = $this->url("/v1/oauth2/token");
-        throw new Exception($url);
         $response = [
             'success' => null,
             'error' => null,
