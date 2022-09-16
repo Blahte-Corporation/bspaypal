@@ -3,6 +3,7 @@
 namespace BlahteSoftware\BsPaypal;
 
 use BlahteSoftware\BsPaypal\Contracts\PaypalCoreInterface;
+use Exception;
 
 class PaypalCore implements PaypalCoreInterface {
     protected bool $live = false;
@@ -13,7 +14,7 @@ class PaypalCore implements PaypalCoreInterface {
     public string $host;
     
     const SANDBOX_HOST = 'https://api-m.sandbox.paypal.com';
-    const HOST = 'https://api.paypal.com';
+    const HOST = 'https://api-m.paypal.com';
 
     public function __construct(
         bool $live,
@@ -39,6 +40,7 @@ class PaypalCore implements PaypalCoreInterface {
     public function generateAccessToken(): array
     {
         $url = $this->url("/v1/oauth2/token");
+        throw new Exception($url);
         $response = [
             'success' => null,
             'error' => null,
