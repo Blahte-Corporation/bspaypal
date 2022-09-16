@@ -13,7 +13,7 @@ class PaypalCore implements PaypalCoreInterface {
     public string $host;
     
     const SANDBOX_HOST = 'https://api-m.sandbox.paypal.com';
-    const HOST = 'https://api-m.paypal.com';
+    const HOST = 'https://api.paypal.com';
 
     public function __construct(
         bool $live,
